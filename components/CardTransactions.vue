@@ -38,7 +38,6 @@ export default {
 .transactions {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 24px;
   .logo {
     background: $circle-blue;
@@ -101,7 +100,6 @@ export default {
       font-size: 14px;
       color: $green-color;
       font-weight: 600;
-      padding-bottom: 50px;
       padding-right: 5px;
       &.debit{
         color: $black-two;

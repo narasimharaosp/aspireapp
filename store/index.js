@@ -82,3 +82,25 @@ export const state = () => ({
     }
   ]
 })
+
+export const mutations = {
+  addNewCard: (state, cardName) => {
+    const rnd = getRandomNumber(16)
+    const last = rnd.slice(rnd.length - 4)
+    const newCard = {
+      fullNumber: rnd,
+      lastNumber: last,
+      type: 'visa',
+      name: cardName,
+      validity: '12/23',
+      cvv: '***',
+      transactions: []
+    }
+    state.cards.push(newCard)
+  }
+
+}
+
+function getRandomNumber(digit) {
+  return Math.random().toFixed(digit).split('.')[1];
+}

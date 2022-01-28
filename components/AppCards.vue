@@ -10,10 +10,7 @@
           <div class="currency">S$</div>
           <div class="balance">3,000</div>
         </div>
-        <div class="new-card">
-          <img src="~assets/icons/box.svg" alt="new card" />
-          New card
-        </div>
+        <new-card />
       </div>
       <b-tabs>
         <b-tab title="My debit cards">
@@ -34,11 +31,13 @@
 <script>
 import { mapState } from 'vuex'
 import AppCard from '@/components/AppCard'
+import NewCard from '@/components/NewCard'
 
 export default {
   name: 'AppCards',
   components: {
-    AppCard
+    AppCard,
+    NewCard
   },
   computed: {
     ...mapState([
@@ -133,7 +132,10 @@ img {
     color: $white;
     font-size: 13px;
     padding: 5px;
-    margin-right: 30px;
+    margin-right: 10px;
+  }
+  .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
+    border: 0;
   }
   .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
     background: transparent;
