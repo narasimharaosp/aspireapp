@@ -56,7 +56,7 @@ export default {
       default: () => ''
     },
     cardNumber: {
-      type: Number,
+      type: [String, Number],
       default: () => null
     },
     frozen: {
