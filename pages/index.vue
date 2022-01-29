@@ -8,7 +8,7 @@ export default {
   name: 'Index',
   components: {
     AppCards
-  },
+  }
 }
 </script>
 

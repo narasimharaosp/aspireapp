@@ -53,7 +53,7 @@ export default {
     },
     cardName: {
       type: String,
-      default: () => 'Nobody home'
+      default: () => ''
     },
     cardNumber: {
       type: Number,
@@ -73,10 +73,16 @@ export default {
       'freezeCard'
     ]),
     freezeCard () {
+      if (this.cardIndex === undefined || this.frozen === undefined) {
+        return
+      }
       const data = { index: this.cardIndex, state: !this.frozen}
       this.$store.commit('freezeCard', data)
     },
     cancelCard () {
+      if (this.cardIndex === undefined) {
+        return
+      }
       const data = { index: this.cardIndex }
       this.$store.commit('cancelCard', data)
     },

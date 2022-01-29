@@ -29,75 +29,75 @@
 import { mapMutations } from 'vuex'
 import { required, minLength } from "vuelidate/lib/validators"
 
-  export default {
-    data() {
-      return {
-        name: '',
-        submitted: false
-      }
-    },
-    validations: {
-      name: { required, minLength: minLength(6) },
+export default {
+  data() {
+    return {
+      name: '',
       submitted: false
+    }
+  },
+  validations: {
+    name: { required, minLength: minLength(6) },
+    submitted: false
+  },
+  computed: {
+    randomDate () {
+      const nextYear = new Date().getFullYear() + 1
+      const nextFive = nextYear + 5
+      let randomMonth = parseInt(Math.random() * (12 - 1) + 1)
+      randomMonth = (randomMonth < 10) ? ("0" + randomMonth) : randomMonth;
+      const year = parseInt(Math.random() * (nextFive - nextYear) + nextYear)
+      const rY = year.toString()
+      const randomYear = rY.slice(rY.length - 2)
+      return randomMonth + '/' + randomYear
+    }
+  },
+  methods: {
+    ...mapMutations([
+      'addNewCard'
+    ]),
+    resetModal() {
+      this.name = ''
     },
-    computed: {
-      randomDate () {
-        const nextYear = new Date().getFullYear() + 1
-        const nextFive = nextYear + 5
-        let randomMonth = parseInt(Math.random() * (12 - 1) + 1)
-        randomMonth = (randomMonth < 10) ? ("0" + randomMonth) : randomMonth;
-        const year = parseInt(Math.random() * (nextFive - nextYear) + nextYear)
-        const rY = year.toString()
-        const randomYear = rY.slice(rY.length - 2)
-        return randomMonth + '/' + randomYear
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault()
+      // Trigger submit handler
+      this.handleSubmit()
+    },
+    handleSubmit() {
+      this.submitted = true
+      // stop here if form is invalid
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return
       }
-    },
-    methods: {
-      ...mapMutations([
-        'addNewCard'
-      ]),
-      resetModal() {
-        this.name = ''
-      },
-      handleOk(bvModalEvt) {
-        // Prevent modal from closing
-        bvModalEvt.preventDefault()
-        // Trigger submit handler
-        this.handleSubmit()
-      },
-      handleSubmit() {
-        this.submitted = true
-        // stop here if form is invalid
-        this.$v.$touch();
-        if (this.$v.$invalid) {
-          return
-        }
 
-        // Push the name to card object inturn to cards state
-        const rnd = this.getRandomNumber(16)
-        const last = rnd.slice(rnd.length - 4)
-        const cardType = (Math.random()>=0.5)? 'visa' : 'master';
-        const newCard = {
-          fullNumber: rnd,
-          lastNumber: last,
-          type: cardType,
-          name: this.name,
-          validity: this.randomDate,
-          cvv: '***',
-          frozen: false,
-          transactions: []
-        }
-        this.$store.commit('addNewCard', newCard)
-        // Hide the modal manually
-        this.$nextTick(() => {
-          this.$bvModal.hide('modal-prevent-closing')
-        })
-      },
-      getRandomNumber (digit) {
-        return Math.random().toFixed(digit).split('.')[1];
+      // Push the name to card object inturn to cards state
+      const rnd = this.getRandomNumber(16)
+      const last = rnd.slice(rnd.length - 4)
+      const cardType = (Math.random()>=0.5)? 'visa' : 'master';
+      const newCard = {
+        fullNumber: rnd,
+        lastNumber: last,
+        type: cardType,
+        name: this.name,
+        validity: this.randomDate,
+        cvv: '***',
+        frozen: false,
+        transactions: []
       }
+      this.$store.commit('addNewCard', newCard)
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide('modal-prevent-closing')
+      })
+    },
+    getRandomNumber (digit) {
+      return Math.random().toFixed(digit).split('.')[1];
     }
   }
+}
 </script>
 <style lang="scss">
 .modal{
