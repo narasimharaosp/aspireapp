@@ -59,7 +59,7 @@
       </b-carousel-slide>
     </b-carousel>
     <card-details
-      v-if="getActiveCard.fullNumber"
+      v-if="validCard"
       :card-index="slide"
       :card="getActiveCard"
     />
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import CardDetails from '@/components/CardDetails.vue';
+import CardDetails from '@/components/CardDetails'
 
 export default {
   name: 'AppCard',
@@ -87,11 +87,20 @@ export default {
     }
   },
   computed: {
+    validCard () {
+      return !!this.getActiveCard
+    },
     getActiveCard () {
-      return this.cards ? this.cards[this.slide] : []
+      if (this.cards.length > 0 && this.cards[this.slide] !== undefined) {
+        return this.cards[this.slide]
+      }
+      return null
     },
     activeCardState () {
-      return this.cards ? this.cards[this.slide].frozen : false
+      if (this.getActiveCard && this.getActiveCard.frozen !== undefined) {
+        return this.getActiveCard.frozen
+      }
+      return false
     }
   },
   methods: {

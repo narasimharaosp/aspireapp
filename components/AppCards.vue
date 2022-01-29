@@ -55,21 +55,10 @@ export default {
   },
   methods: {
     getN(n) {
-      if (!n || typeof n === 'number') {
+      if (!n || typeof n === 'number' || n.length !== 16) {
         return ''
       }
-      const val = n.split('')
-      const nums = []
-      let newval = ''
-      for (let i = 0; i < val.length; i++) {
-        if (i % 4 === 0 && i > 0) {
-          newval = newval.concat(' ')
-          nums.push(newval)
-          newval = ''
-        }
-        newval = newval.concat(val[i]);
-      }
-      return nums
+      return n.match(/.{1,4}/g)
     }
   }
 }

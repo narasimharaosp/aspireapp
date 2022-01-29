@@ -27,7 +27,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength } from "vuelidate/lib/validators"
 
   export default {
     data() {
