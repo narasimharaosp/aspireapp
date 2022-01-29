@@ -1,7 +1,7 @@
 <template>
   <div class="cards-carousel">
     <div class="show-card-wrapper">
-      <div class="show-card" @click="showCard">
+      <div class="show-card" :class="{'frozen': activeCardState}" @click="showCard">
         <img src="~assets/icons/showcard.svg" alt="Show card number">
         <div v-if="!showCardNumber">
           Show card number
@@ -18,7 +18,7 @@
       indicators
     >
       <b-carousel-slide v-for="card in cards" :key="card.lastNumber" img-blank :img-alt="card.name" :class="card.type">
-        <div class="container-fluid card-info">
+        <div class="container-fluid card-info" :class="{'frozen': card.frozen}">
           <div class="row logo">
             <div class="col">
               <img src="~assets/icons/AspireLogo.svg" alt="AspireLogo">
@@ -52,7 +52,7 @@
           </div>
           <div class="row logo">
             <div class="col">
-              <img src="~assets/icons/VisaLogo.svg" alt="VisaLogo">
+              <img v-if="card.type === 'visa'" src="~assets/icons/VisaLogo.svg" alt="VisaLogo" />
             </div>
           </div>
         </div>
@@ -60,6 +60,7 @@
     </b-carousel>
     <card-details
       v-if="getActiveCard.fullNumber"
+      :card-index="slide"
       :card="getActiveCard"
     />
   </div>
@@ -88,6 +89,9 @@ export default {
   computed: {
     getActiveCard () {
       return this.cards ? this.cards[this.slide] : []
+    },
+    activeCardState () {
+      return this.cards ? this.cards[this.slide].frozen : false
     }
   },
   methods: {
@@ -234,5 +238,9 @@ export default {
   left: 0;
   z-index: 1;
   padding: 0;
+}
+.frozen {
+  opacity: 0.4;
+  pointer-events: none;
 }
 </style>

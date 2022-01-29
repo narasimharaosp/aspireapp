@@ -14,12 +14,14 @@
       </div>
       <b-tabs>
         <b-tab title="My debit cards">
-            <app-card 
+            <app-card
+              v-if="getDebitCards.length"
               :cards="getDebitCards"
             />
         </b-tab>
         <b-tab title="My company cards">
-            <app-card 
+            <app-card
+              v-if="getDebitCards.length"
               :cards="getDebitCards"
             />
         </b-tab>

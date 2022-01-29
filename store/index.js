@@ -7,6 +7,7 @@ export const state = () => ({
       name: 'Mark Henry',
       validity: '12/23',
       cvv: '***',
+      frozen: false,
       transactions: [
         {
           id: 1,
@@ -49,6 +50,7 @@ export const state = () => ({
       name: 'John Doe',
       validity: '12/25',
       cvv: '***',
+      frozen: false,
       transactions: [
         {
           logo: '',
@@ -84,23 +86,13 @@ export const state = () => ({
 })
 
 export const mutations = {
-  addNewCard: (state, cardName) => {
-    const rnd = getRandomNumber(16)
-    const last = rnd.slice(rnd.length - 4)
-    const newCard = {
-      fullNumber: rnd,
-      lastNumber: last,
-      type: 'visa',
-      name: cardName,
-      validity: '12/23',
-      cvv: '***',
-      transactions: []
-    }
-    state.cards.push(newCard)
+  addNewCard: (state, cardData) => {
+    state.cards.push(cardData)
+  },
+  freezeCard: (state, formData) => {
+    state.cards[formData.index].frozen = formData.state
+  },
+  cancelCard: (state, formData) => {
+    state.cards.splice(formData.index, 1)
   }
-
-}
-
-function getRandomNumber(digit) {
-  return Math.random().toFixed(digit).split('.')[1];
 }

@@ -2,45 +2,86 @@
   <div>
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <div class="nav-link" @click="freezeCard">
           <img src="~assets/icons/Freezecard.svg" alt="Freeze card"/>
-          Freeze card
-        </a>
+          {{ frozen ? 'Unfreeze card' : 'Freeze card' }}
+        </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="#">
+        <div class="nav-link active">
           <img src="~assets/icons/Setspendlimit.svg" alt="Set spend limit"/>
           Set spend limit
-        </a>
+        </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <div class="nav-link">
           <img src="~assets/icons/GPay.svg" alt="Add to GPay"/>
           Add to GPay
-        </a>
+        </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <div class="nav-link">
           <img src="~assets/icons/Replacecard.svg" alt="Replace card"/>
           Replace card
-        </a>
+        </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <div class="nav-link" @click="showModal">
           <img src="~assets/icons/Deactivatecard.svg" alt="Cancel card"/>
           Cancel card
-        </a>
+        </div>
       </li>
     </ul>
+    <b-modal
+      ref="cancel-modal"
+      title="Are you sure you want to cancel card?"
+      @ok="cancelCard"
+    >
+      <div><b>Name:</b> {{ cardName }}</div>
+      <div><b>Card Number:</b> {{ cardNumber }}</div>
+    </b-modal>
   </div>
 </template>
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: 'CardTransactions',
   props: {
+    cardIndex: {
+      type: Number,
+      default: () => 0
+    },
+    cardName: {
+      type: String,
+      default: () => 'Nobody home'
+    },
+    cardNumber: {
+      type: Number,
+      default: () => null
+    },
+    frozen: {
+      type: Boolean,
+      default: () => false
+    },
     transactions: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    ...mapMutations([
+      'freezeCard'
+    ]),
+    freezeCard () {
+      const data = { index: this.cardIndex, state: !this.frozen}
+      this.$store.commit('freezeCard', data)
+    },
+    cancelCard () {
+      const data = { index: this.cardIndex }
+      this.$store.commit('cancelCard', data)
+    },
+    showModal () {
+      this.$refs['cancel-modal'].show()
     }
   }
 }

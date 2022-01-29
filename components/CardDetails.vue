@@ -1,7 +1,12 @@
 <template>
   <section>
     <div class="options">
-      <card-options />
+      <card-options
+        :card-index="cardIndex"
+        :card-name="card ? card.name : ''"
+        :card-number="card ? card.fullNumber: null"
+        :frozen="card ? card.frozen : false"
+      />
     </div>
     <div class="transactions-wrapper">
       <div class="accordion" role="tablist">
@@ -48,6 +53,10 @@ export default {
     CardTransactions
   },
   props: {
+    cardIndex: {
+      type: Number,
+      default: () => 0
+    },
     card: {
       type: Object,
       default: () => null
