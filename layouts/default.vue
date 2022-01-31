@@ -35,4 +35,11 @@ html, body {
   margin: 0;
   padding: 0;
 }
+.content {
+  @include sm{
+    display: flex;
+    flex-flow: row-reverse;
+    justify-content: flex-end;
+  }
+}
 </style>

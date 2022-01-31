@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-b-modal.modal-prevent-closing class="new-card">
-      <img src="~assets/icons/box.svg" alt="new card" />
+      <img src="~assets/icons/box.svg" alt="new card" class="mobile-plus" />
+      <img src="~assets/icons/WhitePlus.svg" alt="new card" class="desktop-plus"/>
       New card
     </div>
 
@@ -103,9 +104,35 @@ export default {
 .modal{
   color: $black-two;
 }
+.new-card{
+  font-size: 13px;
+  color: $blue-color;
+  @include sm{
+    width: 109px;
+    height: 35px;
+    background-color: $new-blue;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: $white;
+    font-weight: 400;
+  }
+}
 .new-card img{
   width: 16px;
   height: 16px;
   margin-bottom: 2px;
+}
+.mobile-plus {
+  @include sm{
+    display: none;
+  }
+}
+.desktop-plus {
+  display: none;
+  @include sm{
+    display: block;
+  }
 }
 </style>

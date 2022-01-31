@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="options">
     <ul class="navbar-nav">
       <li class="nav-item">
         <div class="nav-link" @click="freezeCard">
@@ -93,6 +93,23 @@ export default {
 }
 </script>
 <style lang="scss">
+.options {
+  position: absolute;
+  padding: 20px;
+  background-color: $light-blue;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  left: 0;
+  top: 490px;
+  z-index: 3;
+  @include sm{
+    position: static;
+    border-radius: 10px;
+    margin-top: 64px;
+    max-width: 414px;
+  }
+}
 ul.navbar-nav{
   width: 100%;
   height: 56px;
