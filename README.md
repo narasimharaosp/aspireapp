@@ -27,4 +27,6 @@ $ yarn generate
 ```
 
 ## Hosted address
-https://aspirefin.netlify.app/
+Mobile version: https://aspirefin.netlify.app/
+
+Responsive version: https://aspire-desk.netlify.app/
